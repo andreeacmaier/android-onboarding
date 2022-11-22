@@ -1,5 +1,7 @@
 package com.ascentcore.onboarding.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ascentcore.onboarding.R;
 import com.ascentcore.onboarding.model.Playlist;
+import com.ascentcore.onboarding.ui.playlists.PlaylistDetailsActivity;
 
 import java.util.ArrayList;
 
 public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.PlaylistViewHolder> {
 
     private ArrayList<Playlist> items;
+    private Context context;
 
     public void setItems(@Nullable ArrayList<Playlist> items) {
         this.items = items;
         notifyDataSetChanged();
     }
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -34,13 +41,20 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
     @Override
     public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
         holder.playlistName.setText(items.get(position).getPlaylistName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PlaylistDetailsActivity.class);
+                intent.putExtra("playlistName", holder.playlistName.getText());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return items.size();
     }
-
 
 
     class PlaylistViewHolder extends RecyclerView.ViewHolder {

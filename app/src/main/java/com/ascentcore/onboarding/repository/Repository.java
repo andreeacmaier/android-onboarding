@@ -28,4 +28,12 @@ public class Repository {
     public ArrayList<Playlist> getAllPlaylists() {
         return playlists;
     }
+
+    public Playlist findPlaylistByName(String name) {
+        return playlists.stream().filter(playlist -> name.equals(playlist.getPlaylistName())).findFirst().orElse(null);
+    }
+
+    public ArrayList<Song> getAllSongsInPlaylist(String playlistName) {
+        return findPlaylistByName(playlistName).getSongs();
+    }
 }

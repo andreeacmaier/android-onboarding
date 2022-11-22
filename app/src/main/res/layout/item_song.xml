@@ -5,7 +5,8 @@
     android:layout_height="150dp">
 
     <TextView
-        android:id="@+id/playlistName"
+        android:id="@+id/songName"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
