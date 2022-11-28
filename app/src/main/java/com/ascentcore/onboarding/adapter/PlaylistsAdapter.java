@@ -1,5 +1,7 @@
 package com.ascentcore.onboarding.adapter;
 
+import static com.ascentcore.onboarding.ui.playlists.Constants.PLAYLIST_NAME;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -45,7 +47,7 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PlaylistDetailsActivity.class);
-                intent.putExtra("playlistName", holder.playlistName.getText());
+                intent.putExtra(PLAYLIST_NAME, holder.playlistName.getText());
                 context.startActivity(intent);
             }
         });

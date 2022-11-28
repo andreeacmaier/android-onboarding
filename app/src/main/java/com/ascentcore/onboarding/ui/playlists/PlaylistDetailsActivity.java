@@ -1,10 +1,14 @@
 package com.ascentcore.onboarding.ui.playlists;
 
+import static com.ascentcore.onboarding.ui.playlists.Constants.FROM_PLAYLISTS;
+import static com.ascentcore.onboarding.ui.playlists.Constants.PLAYLIST_NAME;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +21,6 @@ import java.util.Objects;
 public class PlaylistDetailsActivity extends AppCompatActivity {
 
     Repository repository;
-    RecyclerView recyclerView;
-    SongAdapter adapter;
     Intent intent;
 
 
@@ -32,15 +34,17 @@ public class PlaylistDetailsActivity extends AppCompatActivity {
 
     private void initUi() {
         intent = getIntent();
-        if (Objects.nonNull(intent.getExtras())) {
-            String playlistName = (String) intent.getExtras().get("playlistName");
-            recyclerView = findViewById(R.id.songs);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-            adapter = new SongAdapter();
-            recyclerView.setAdapter(adapter);
-            adapter.setSongs(repository.getAllSongsInPlaylist(playlistName));
+
+        if (Objects.nonNull(intent) && Objects.nonNull(intent.getExtras())) {
+            Fragment fragment = new PlaybackSongsFragment();
+            String playlistName = (String) intent.getExtras().get(PLAYLIST_NAME);
+            Bundle bundle = new Bundle();
+            bundle.putString(PLAYLIST_NAME, playlistName);
+            bundle.putBoolean(FROM_PLAYLISTS, true);
+            fragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+                    fragment).commit();
         } else {
-            //intent = new Intent(PlaylistDetailsActivity.this)
             Toast.makeText(this, "Songs could not be loaded", Toast.LENGTH_SHORT).show();
         }
     }

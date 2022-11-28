@@ -36,4 +36,8 @@ public class Repository {
     public ArrayList<Song> getAllSongsInPlaylist(String playlistName) {
         return findPlaylistByName(playlistName).getSongs();
     }
+
+    public Song findSongByName(String name) {
+        return songsInPlaylistOne.stream().filter(song -> name.equals(song.getSongName())).findFirst().orElse(null);
+    }
 }
