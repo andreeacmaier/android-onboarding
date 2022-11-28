@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -66,11 +67,13 @@ public class PlaybackSongsFragment extends Fragment {
                     Song song = repository.findSongByName(songName);
                     TextView songTextView = view.findViewById(R.id.songName);
                     TextView artistTextView = view.findViewById(R.id.songArtist);
+                    ImageButton imageButton =  view.findViewById(R.id.playPauseButton);
 
                     songTextView.setText(song.getSongName());
                     artistTextView.setText(song.getSongArtist());
 
-                    // TODO: isPlaying ? playIcon : pauseIcon
+                    int btnImage = isPlaying? R.drawable.button_play : R.drawable.pause;
+                    imageButton.setImageResource(btnImage);
                 }
                 bottomView.setVisibility(View.VISIBLE);
             }

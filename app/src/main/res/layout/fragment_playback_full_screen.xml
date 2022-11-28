@@ -73,7 +73,8 @@
                 android:src="@drawable/button_play"
                 android:background="@color/white"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:onClick="onClick"/>
 
             <ImageButton
                 android:id="@+id/nextButton"

@@ -28,6 +28,7 @@ public class PlaybackFullscreenFragment extends Fragment {
     View view;
     String playlistName;
     String songName;
+    boolean isPlaying = true;
 
     @Nullable
     @Override
@@ -46,6 +47,7 @@ public class PlaybackFullscreenFragment extends Fragment {
             Song song = repository.findSongByName(songName);
             populateScreenWithSongDetails(song);
             handleMinimize();
+            handlePlayPause();
         } else {
             Toast.makeText(this.getContext(), "There was an error and song can not be played.", Toast.LENGTH_SHORT).show();
         }
@@ -63,24 +65,28 @@ public class PlaybackFullscreenFragment extends Fragment {
 
     private void handleMinimize() {
         ImageButton minimizeButton = view.findViewById(R.id.minimizeButton);
-        minimizeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(FROM_PLAYLISTS, false);
-                bundle.putString(PLAYLIST_NAME, playlistName);
-                bundle.putString(SONG_NAME, songName);
-                // TODO: Add new field "isPlaying" (onClick play button -> change state)
-                bundle.putBoolean(IS_PLAYING, true);
-                Fragment fragment = new PlaybackSongsFragment();
-                fragment.setArguments(bundle);
-                //TODO: add animation (fade out/ to bottom)
-                ((PlaylistDetailsActivity) getContext()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer,
-                                fragment).commit();
-            }
+        minimizeButton.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(FROM_PLAYLISTS, false);
+            bundle.putString(PLAYLIST_NAME, playlistName);
+            bundle.putString(SONG_NAME, songName);
+            bundle.putBoolean(IS_PLAYING, isPlaying);
+            Fragment fragment = new PlaybackSongsFragment();
+            fragment.setArguments(bundle);
+            //TODO: add animation (fade out/ to bottom)
+            ((PlaylistDetailsActivity) getContext()).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer,
+                            fragment).commit();
         });
     }
 
+    private void handlePlayPause() {
+        ImageButton imageButton =  view.findViewById(R.id.playPauseButton);
+        imageButton.setOnClickListener(view -> {
+            isPlaying = !isPlaying;
+            int btnImage = isPlaying? R.drawable.button_play : R.drawable.pause;
+            imageButton.setImageResource(btnImage);
+        });
+    }
 
 }
