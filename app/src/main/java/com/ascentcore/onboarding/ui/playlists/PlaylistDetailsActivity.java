@@ -44,6 +44,7 @@ public class PlaylistDetailsActivity extends AppCompatActivity {
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
                     fragment).commit();
+            //findViewById(R.id.fragmentContainer).setTranslationY();
         } else {
             Toast.makeText(this, "Songs could not be loaded", Toast.LENGTH_SHORT).show();
         }

@@ -73,8 +73,10 @@ public class PlaybackFullscreenFragment extends Fragment {
             bundle.putBoolean(IS_PLAYING, isPlaying);
             Fragment fragment = new PlaybackSongsFragment();
             fragment.setArguments(bundle);
-            //TODO: add animation (fade out/ to bottom)
-            ((PlaylistDetailsActivity) getContext()).getSupportFragmentManager().beginTransaction()
+            //TODO: add animation (slide to bottom)
+            ((PlaylistDetailsActivity) getContext()).getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_y, R.anim.slide_out_y)
                     .replace(R.id.fragmentContainer,
                             fragment).commit();
         });
